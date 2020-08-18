@@ -1,0 +1,46 @@
+ Scanner input = new Scanner(System.in);
+        int f1, f2;
+        f2 = input.nextInt();
+        for (f1 = 0; f1 < f2; f1++) {
+            Scanner input2 = new Scanner(System.in);
+            String s1 = input2.nextLine();
+            String s2 = input2.nextLine();
+            char[] X = s1.toCharArray();
+            char[] Y = s2.toCharArray();
+            int m = X.length;
+            int n = Y.length;
+            int i, j, reminder, count1 = 1, count2 = 0, given = 23102009;
+            int L[][] = new int[m + 1][n + 1];
+
+            for (i = 0; i <= m; i++) {
+                for (j = 0; j <= n; j++) {
+                    if (i == 0 || j == 0) {
+                        L[i][j] = 0;
+                    } else if (X[i - 1] == Y[j - 1]) {
+                        L[i][j] = L[i - 1][j - 1] + 1;
+
+                    } else {
+                        L[i][j] = (L[i - 1][j] > L[i][j - 1]) ? L[i - 1][j] : L[i][j - 1];
+                    }
+                }
+            }
+            System.out.print(L[m][n]+" ");
+            while (m > 0 && n > 0) {
+                if (L[m - 1][n] == L[m][n - 1] && L[m - 1][n] == L[m][n] && L[m][n] == L[m][n - 1]) {
+                    count2++;
+                    m--;
+                    n--;
+                } else if (L[m - 1][n] > L[m][n - 1]) {
+                    m--;
+                } else {
+                    n--;
+                }
+            }
+            if (count2 != 0) {
+                reminder = count2 % given;
+                System.out.println(reminder);
+            } else {
+                reminder = count1 % given;
+                System.out.println(reminder);
+            }
+        }
